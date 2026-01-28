@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+}
+
+header {
+  text-align: center;
+  background: #0a66c2;
+  color: white;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.form-section,
+.resume-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+}
+
+input, textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+button {
+  margin: 5px 5px 0 0;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.resume-section h2 {
+  margin-bottom: 5px;
+}
