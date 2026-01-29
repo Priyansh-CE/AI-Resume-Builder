@@ -1,63 +1,178 @@
-body {
-  font-family: Arial, sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
   margin: 0;
-  background: #f4f6f8;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
+  color: #333;
+}
+
+/* HEADER */
 header {
-  background: #0a66c2;
-  color: white;
   text-align: center;
-  padding: 20px;
+  padding: 30px 10px;
+  color: #fff;
 }
 
-.container {
-  display: flex;
-  gap: 20px;
-  padding: 20px;
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
 }
 
-.form-section, .resume-section {
-  background: white;
-  padding: 20px;
-  width: 50%;
-  border-radius: 10px;
+header p {
+  opacity: 0.9;
 }
 
-input, textarea, select {
+/* AUTH BOX */
+.auth-box {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.auth-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth-box input {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
-button {
-  background: #0a66c2;
-  color: white;
+.auth-box button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
   border: none;
-  padding: 10px;
-  margin: 5px 0;
+  border-radius: 8px;
+  background: #667eea;
+  color: #fff;
+  font-weight: 500;
   cursor: pointer;
 }
 
-.auth-box {
-  max-width: 300px;
-  margin: 50px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
+.auth-box button:hover {
+  background: #5563d6;
 }
 
-/* Templates */
+/* MAIN CONTAINER */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* FORM SECTION */
+.form-section {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.form-section h2 {
+  margin-bottom: 15px;
+}
+
+.form-section input,
+.form-section textarea,
+.form-section select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+.form-section button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #764ba2;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.form-section button:hover {
+  background: #643a8d;
+}
+
+.form-section hr {
+  margin: 20px 0;
+}
+
+/* RESUME SECTION */
+.resume-section {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.resume-section h2 {
+  font-size: 26px;
+  color: #333;
+}
+
+.resume-section h3 {
+  margin-top: 18px;
+  color: #667eea;
+}
+
+.resume-section p {
+  margin-top: 5px;
+  line-height: 1.6;
+}
+
+.resume-section ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.resume-section li {
+  margin-bottom: 6px;
+}
+
+/* TEMPLATES */
 .resume-section.classic {
-  font-size: 14px;
+  border-left: 6px solid #667eea;
 }
 
 .resume-section.modern {
-  background: linear-gradient(135deg, #ffffff, #e0f2fe);
-  border-left: 6px solid #0a66c2;
+  background: linear-gradient(180deg, #ffffff, #f2f3ff);
+  border-left: 6px solid #764ba2;
 }
 
-.resume-section.modern h2 {
-  color: #0a66c2;
+/* DROPDOWN */
+#versions {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
 }
