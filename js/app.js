@@ -8,10 +8,51 @@ function generateResume() {
   document.getElementById("r-skills").innerText =
     document.getElementById("skills").value || "Skills";
 
-  document.getElementById("r-projects").innerText =
-    document.getElementById("projects").value || "Projects / Experience";
+  renderProjects(document.getElementById("projects").value);
 }
 
+/* AI CONTENT IMPROVER */
+function improveWithAI() {
+  const input = document.getElementById("projects").value;
+
+  if (!input) {
+    alert("Add some project or experience text first");
+    return;
+  }
+
+  const lines = input.split("\n");
+
+  const improved = lines.map(line => {
+    if (!line.trim()) return "";
+
+    return "• " + line
+      .replace(/made|created|worked on/i, "Developed")
+      .replace(/using/i, "using modern technologies like")
+      .replace(/helped/i, "Contributed to")
+      .replace(/improved/i, "Optimized")
+      .replace(/app/i, "application")
+      + " with measurable impact.";
+  });
+
+  document.getElementById("projects").value = improved.join("\n");
+  renderProjects(improved.join("\n"));
+}
+
+/* Render bullet list */
+function renderProjects(text) {
+  const ul = document.getElementById("r-projects");
+  ul.innerHTML = "";
+
+  text.split("\n").forEach(line => {
+    if (line.trim()) {
+      const li = document.createElement("li");
+      li.innerText = line.replace("• ", "");
+      ul.appendChild(li);
+    }
+  });
+}
+
+/* ATS SCORE */
 function calculateATS() {
   const resumeText = (
     document.getElementById("skills").value +
