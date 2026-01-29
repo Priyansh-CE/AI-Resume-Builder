@@ -20,16 +20,17 @@
 
   <input id="name" placeholder="Full Name">
   <input id="role" placeholder="Job Role">
-  <textarea id="skills" placeholder="Skills"></textarea>
-  <textarea id="projects" placeholder="Projects / Experience"></textarea>
+
+  <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+  <textarea id="projects" placeholder="Projects / Experience (simple lines)"></textarea>
 
   <button onclick="generateResume()">Preview</button>
+  <button onclick="improveWithAI()">AI Improve Content 🤖</button>
 
   <hr>
 
   <h3>Job Description (ATS)</h3>
   <textarea id="jd" placeholder="Paste job description here"></textarea>
-
   <button onclick="calculateATS()">Check ATS Score 📊</button>
 </section>
 
@@ -41,7 +42,7 @@
   <p id="r-skills"></p>
 
   <h3>Projects</h3>
-  <p id="r-projects"></p>
+  <ul id="r-projects"></ul>
 
   <div class="ats-box">
     <h3>ATS Score</h3>
