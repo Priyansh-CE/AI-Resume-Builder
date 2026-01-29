@@ -3,49 +3,53 @@
 :root {
   --bg: #f4f6f8;
   --card: #ffffff;
-  --text: #000000;
-  --border: #dddddd;
+  --text: #000;
   --primary: #0a66c2;
+  --border: #ddd;
 }
 
 body.dark {
   --bg: #0f172a;
   --card: #1e293b;
   --text: #e5e7eb;
-  --border: #334155;
   --primary: #38bdf8;
+  --border: #334155;
 }
 
 body {
+  margin: 0;
   font-family: 'Inter', sans-serif;
   background: var(--bg);
-  margin: 0;
   color: var(--text);
+  transition: 0.3s;
 }
 
 /* Header */
 header {
-  text-align: center;
   background: var(--primary);
   color: white;
   padding: 20px;
+  text-align: center;
 }
 
-.toggle-btn {
+.top-controls {
   margin-top: 10px;
-  padding: 8px 14px;
-  border: none;
+}
+
+select, header button {
+  padding: 6px 10px;
   border-radius: 6px;
-  cursor: pointer;
+  border: none;
+  margin: 5px;
 }
 
 /* Layout */
 .container {
-  display: flex;
-  gap: 30px;
-  padding: 30px;
   max-width: 1200px;
   margin: auto;
+  padding: 30px;
+  display: flex;
+  gap: 30px;
 }
 
 /* Cards */
@@ -56,6 +60,7 @@ header {
   border-radius: 12px;
   width: 50%;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transition: 0.3s;
 }
 
 /* Inputs */
@@ -69,30 +74,40 @@ input, textarea {
   color: var(--text);
 }
 
-input:focus, textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
 /* Buttons */
 button {
   background: var(--primary);
   color: white;
   border: none;
-  border-radius: 6px;
   padding: 10px 16px;
+  border-radius: 6px;
   cursor: pointer;
   margin: 5px 5px 0 0;
 }
 
-/* Resume */
+/* Resume Templates */
 .resume-section h2 {
   font-size: 28px;
-  margin-bottom: 5px;
 }
 
 .resume-section h3 {
-  margin-top: 20px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 5px;
+  margin-top: 20px;
+}
+
+/* Modern template */
+.resume-section.modern {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, var(--card), #e0f2fe);
+}
+
+/* Animation */
+.fade-in {
+  animation: fade 0.6s ease;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
