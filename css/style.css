@@ -1,113 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+/* KEEP YOUR PREVIOUS CSS + ADD THIS */
 
-:root {
-  --bg: #f4f6f8;
-  --card: #ffffff;
-  --text: #000;
-  --primary: #0a66c2;
-  --border: #ddd;
-}
-
-body.dark {
-  --bg: #0f172a;
-  --card: #1e293b;
-  --text: #e5e7eb;
-  --primary: #38bdf8;
-  --border: #334155;
-}
-
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  transition: 0.3s;
-}
-
-/* Header */
-header {
-  background: var(--primary);
-  color: white;
+.auth-box {
+  max-width: 300px;
+  margin: 50px auto;
+  background: var(--card);
   padding: 20px;
+  border-radius: 10px;
   text-align: center;
 }
 
-.top-controls {
-  margin-top: 10px;
-}
-
-select, header button {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: none;
-  margin: 5px;
-}
-
-/* Layout */
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 30px;
-  display: flex;
-  gap: 30px;
-}
-
-/* Cards */
-.form-section,
-.resume-section {
-  background: var(--card);
-  padding: 25px;
-  border-radius: 12px;
-  width: 50%;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  transition: 0.3s;
-}
-
-/* Inputs */
-input, textarea {
+.auth-box input {
   width: 100%;
   margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-}
-
-/* Buttons */
-button {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 5px 5px 0 0;
-}
-
-/* Resume Templates */
-.resume-section h2 {
-  font-size: 28px;
-}
-
-.resume-section h3 {
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 5px;
-  margin-top: 20px;
-}
-
-/* Modern template */
-.resume-section.modern {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, var(--card), #e0f2fe);
-}
-
-/* Animation */
-.fade-in {
-  animation: fade 0.6s ease;
-}
-
-@keyframes fade {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
