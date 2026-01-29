@@ -10,19 +10,10 @@
 
 <header>
   <h1>Resume Builder</h1>
-  <p>Templates • Firebase • PDF</p>
+  <p>Templates • Local Save • PDF</p>
 </header>
 
-<!-- AUTH -->
-<div class="auth-box" id="authBox">
-  <h2>Login / Signup</h2>
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-  <button onclick="signup()">Signup</button>
-</div>
-
-<main class="container" id="app" style="display:none">
+<main class="container" id="app">
 
 <section class="form-section">
   <h2>Resume Details</h2>
@@ -38,14 +29,13 @@
   </select>
 
   <button onclick="generateResume()">Preview</button>
-  <button onclick="saveResume()">Save Version 💾</button>
+  <button onclick="saveResume()">Save Resume 💾</button>
   <button onclick="downloadPDF()">Download PDF 📄</button>
-  <button onclick="logout()">Logout</button>
 
   <hr>
-  <h3>Saved Versions</h3>
+  <h3>Saved Resumes</h3>
   <select id="versions" onchange="loadVersion(this.value)">
-    <option value="">Select version</option>
+    <option value="">Select saved resume</option>
   </select>
 </section>
 
@@ -65,12 +55,7 @@
 <!-- PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-
-<script src="js/firebase.js"></script>
+<!-- APP JS -->
 <script src="js/app.js"></script>
 
 </body>
