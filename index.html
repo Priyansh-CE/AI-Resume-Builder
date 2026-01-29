@@ -22,10 +22,11 @@
   <input id="role" placeholder="Job Role">
 
   <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
-  <textarea id="projects" placeholder="Projects / Experience (simple lines)"></textarea>
+  <textarea id="projects" placeholder="Projects / Experience"></textarea>
 
   <button onclick="generateResume()">Preview</button>
   <button onclick="improveWithAI()">AI Improve Content 🤖</button>
+  <button onclick="downloadPDF()">Download PDF 📄</button>
 
   <hr>
 
@@ -52,6 +53,9 @@
 </section>
 
 </main>
+
+<!-- PDF Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script src="js/app.js"></script>
 </body>
