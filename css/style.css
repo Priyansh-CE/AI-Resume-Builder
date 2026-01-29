@@ -1,28 +1,45 @@
-/* Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --text: #000000;
+  --border: #dddddd;
+  --primary: #0a66c2;
+}
+
+body.dark {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --text: #e5e7eb;
+  --border: #334155;
+  --primary: #38bdf8;
+}
 
 body {
   font-family: 'Inter', sans-serif;
-  background: #f4f6f8;
+  background: var(--bg);
   margin: 0;
+  color: var(--text);
 }
 
+/* Header */
 header {
   text-align: center;
-  background: #0a66c2;
+  background: var(--primary);
   color: white;
   padding: 20px;
 }
 
-header h1 {
-  margin: 0;
+.toggle-btn {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-header p {
-  margin: 5px 0 0 0;
-}
-
-/* Container for form + resume */
+/* Layout */
 .container {
   display: flex;
   gap: 30px;
@@ -31,59 +48,44 @@ header p {
   margin: auto;
 }
 
-/* Form section */
-.form-section {
-  background: #ffffff;
+/* Cards */
+.form-section,
+.resume-section {
+  background: var(--card);
   padding: 25px;
   border-radius: 12px;
-  width: 45%;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  width: 50%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-.form-section h2 {
-  margin-bottom: 15px;
-}
-
+/* Inputs */
 input, textarea {
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #ddd;
   border-radius: 6px;
-  font-size: 14px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
 }
 
 input:focus, textarea:focus {
   outline: none;
-  border-color: #0a66c2;
+  border-color: var(--primary);
 }
 
+/* Buttons */
 button {
-  margin: 5px 5px 0 0;
-  padding: 10px 16px;
-  background: #0a66c2;
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 6px;
-  font-size: 14px;
+  padding: 10px 16px;
   cursor: pointer;
-  transition: 0.2s ease;
+  margin: 5px 5px 0 0;
 }
 
-button:hover {
-  background: #084a8f;
-}
-
-/* Resume section */
-.resume-section {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  width: 55%;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  line-height: 1.6;
-}
-
+/* Resume */
 .resume-section h2 {
   font-size: 28px;
   margin-bottom: 5px;
@@ -91,6 +93,6 @@ button:hover {
 
 .resume-section h3 {
   margin-top: 20px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border);
   padding-bottom: 5px;
 }
