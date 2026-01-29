@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>AI Resume Builder</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="assets/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -12,6 +11,7 @@
   <header>
     <h1>AI Resume Builder</h1>
     <p>Create a professional resume with AI assistance</p>
+    <button class="toggle-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
   </header>
 
   <main class="container">
@@ -44,10 +44,10 @@
 
   </main>
 
-  <!-- External library for PDF -->
+  <!-- PDF library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-  <!-- Your JS files -->
+  <!-- JS files -->
   <script src="js/app.js"></script>
   <script src="js/ai.js"></script>
   <script src="js/pdf.js"></script>
