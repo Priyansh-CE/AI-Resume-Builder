@@ -1,10 +1,4 @@
-// 🔗 DOM ELEMENTS
-const authBox = document.getElementById("authBox");
-const app = document.getElementById("app");
-
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-
+// DOM ELEMENTS
 const nameInput = document.getElementById("name");
 const roleInput = document.getElementById("role");
 const skillsInput = document.getElementById("skills");
@@ -18,43 +12,10 @@ const rRole = document.getElementById("r-role");
 const rSkills = document.getElementById("r-skills");
 const rProjects = document.getElementById("r-projects");
 
-let currentUser = null;
+// STORAGE KEY
+const STORAGE_KEY = "saved_resumes";
 
-/* 🔐 AUTH STATE */
-auth.onAuthStateChanged(user => {
-  if (user) {
-    currentUser = user;
-    authBox.style.display = "none";
-    app.style.display = "grid";
-    loadVersions();
-  } else {
-    authBox.style.display = "block";
-    app.style.display = "none";
-  }
-});
-
-/* 🔑 LOGIN */
-function login() {
-  auth.signInWithEmailAndPassword(
-    emailInput.value,
-    passwordInput.value
-  ).catch(err => alert(err.message));
-}
-
-/* 📝 SIGNUP */
-function signup() {
-  auth.createUserWithEmailAndPassword(
-    emailInput.value,
-    passwordInput.value
-  ).catch(err => alert(err.message));
-}
-
-/* 🚪 LOGOUT */
-function logout() {
-  auth.signOut();
-}
-
-/* 👀 PREVIEW RESUME */
+/* 👀 PREVIEW */
 function generateResume() {
   rName.innerText = nameInput.value || "Your Name";
   rRole.innerText = roleInput.value || "";
@@ -75,66 +36,58 @@ function changeTemplate(template) {
   resume.className = "resume-section " + template;
 }
 
-/* 💾 SAVE VERSION */
+/* 💾 SAVE RESUME (LOCALSTORAGE) */
 function saveResume() {
-  if (!currentUser) return alert("Login first");
+  const resumes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-  db.collection("resumes")
-    .doc(currentUser.uid)
-    .collection("versions")
-    .add({
-      name: nameInput.value,
-      role: roleInput.value,
-      skills: skillsInput.value,
-      projects: projectsInput.value,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-      alert("Resume saved ✅");
-      loadVersions();
-    })
-    .catch(err => alert(err.message));
+  const data = {
+    name: nameInput.value,
+    role: roleInput.value,
+    skills: skillsInput.value,
+    projects: projectsInput.value,
+    time: new Date().toLocaleString()
+  };
+
+  resumes.unshift(data);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(resumes));
+
+  alert("Resume saved locally ✅");
+  loadVersions();
 }
 
-/* 📂 LOAD VERSIONS */
+/* 📂 LOAD SAVED LIST */
 function loadVersions() {
-  versions.innerHTML = `<option value="">Select version</option>`;
+  versions.innerHTML = `<option value="">Select saved resume</option>`;
 
-  db.collection("resumes")
-    .doc(currentUser.uid)
-    .collection("versions")
-    .orderBy("createdAt", "desc")
-    .get()
-    .then(snapshot => {
-      snapshot.forEach(doc => {
-        const opt = document.createElement("option");
-        opt.value = doc.id;
-        opt.innerText = doc.id;
-        versions.appendChild(opt);
-      });
-    });
+  const resumes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+  resumes.forEach((r, index) => {
+    const opt = document.createElement("option");
+    opt.value = index;
+    opt.innerText = r.time;
+    versions.appendChild(opt);
+  });
 }
 
-/* ♻ LOAD SELECTED VERSION */
-function loadVersion(id) {
-  if (!id) return;
+/* ♻ LOAD SELECTED */
+function loadVersion(index) {
+  if (index === "") return;
 
-  db.collection("resumes")
-    .doc(currentUser.uid)
-    .collection("versions")
-    .doc(id)
-    .get()
-    .then(doc => {
-      const d = doc.data();
-      nameInput.value = d.name;
-      roleInput.value = d.role;
-      skillsInput.value = d.skills;
-      projectsInput.value = d.projects;
-      generateResume();
-    });
+  const resumes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  const r = resumes[index];
+
+  nameInput.value = r.name;
+  roleInput.value = r.role;
+  skillsInput.value = r.skills;
+  projectsInput.value = r.projects;
+
+  generateResume();
 }
 
 /* 📄 PDF */
 function downloadPDF() {
   html2pdf().from(resume).save("resume.pdf");
 }
+
+// Load saved resumes on start
+loadVersions();
