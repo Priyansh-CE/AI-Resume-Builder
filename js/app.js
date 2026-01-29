@@ -14,31 +14,22 @@ function generateResume() {
 /* AI CONTENT IMPROVER */
 function improveWithAI() {
   const input = document.getElementById("projects").value;
-
   if (!input) {
-    alert("Add some project or experience text first");
+    alert("Add project or experience text first");
     return;
   }
 
-  const lines = input.split("\n");
-
-  const improved = lines.map(line => {
+  const improved = input.split("\n").map(line => {
     if (!line.trim()) return "";
-
-    return "• " + line
-      .replace(/made|created|worked on/i, "Developed")
-      .replace(/using/i, "using modern technologies like")
-      .replace(/helped/i, "Contributed to")
-      .replace(/improved/i, "Optimized")
-      .replace(/app/i, "application")
-      + " with measurable impact.";
+    return "• Developed " + line.replace(/made|created|worked on/i, "")
+      + " using modern technologies with measurable impact.";
   });
 
   document.getElementById("projects").value = improved.join("\n");
   renderProjects(improved.join("\n"));
 }
 
-/* Render bullet list */
+/* Render project bullets */
 function renderProjects(text) {
   const ul = document.getElementById("r-projects");
   ul.innerHTML = "";
@@ -61,27 +52,32 @@ function calculateATS() {
   ).toLowerCase();
 
   const jdText = document.getElementById("jd").value.toLowerCase();
-
-  if (!jdText) {
-    alert("Paste job description first");
-    return;
-  }
+  if (!jdText) return alert("Paste job description");
 
   const jdWords = [...new Set(jdText.match(/\b[a-z]{3,}\b/g))];
-
-  let matched = [];
-  jdWords.forEach(word => {
-    if (resumeText.includes(word)) matched.push(word);
-  });
-
+  const matched = jdWords.filter(w => resumeText.includes(w));
   const score = Math.round((matched.length / jdWords.length) * 100);
 
   document.getElementById("atsScore").innerText = score + "%";
   document.getElementById("atsScore").style.color =
     score >= 70 ? "green" : "orange";
 
-  const missing = jdWords.filter(w => !matched.includes(w));
-
   document.getElementById("missing").innerText =
-    "Missing keywords: " + missing.slice(0, 10).join(", ");
+    "Missing keywords: " +
+    jdWords.filter(w => !matched.includes(w)).slice(0, 10).join(", ");
+}
+
+/* PDF DOWNLOAD */
+function downloadPDF() {
+  const resume = document.getElementById("resume");
+
+  const opt = {
+    margin: 0.5,
+    filename: 'resume.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+
+  html2pdf().set(opt).from(resume).save();
 }
