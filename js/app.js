@@ -1,11 +1,31 @@
+// 🔗 DOM ELEMENTS
+const authBox = document.getElementById("authBox");
+const app = document.getElementById("app");
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+
+const nameInput = document.getElementById("name");
+const roleInput = document.getElementById("role");
+const skillsInput = document.getElementById("skills");
+const projectsInput = document.getElementById("projects");
+
+const resume = document.getElementById("resume");
+const versions = document.getElementById("versions");
+
+const rName = document.getElementById("r-name");
+const rRole = document.getElementById("r-role");
+const rSkills = document.getElementById("r-skills");
+const rProjects = document.getElementById("r-projects");
+
 let currentUser = null;
 
-/* AUTH */
+/* 🔐 AUTH STATE */
 auth.onAuthStateChanged(user => {
   if (user) {
     currentUser = user;
     authBox.style.display = "none";
-    app.style.display = "flex";
+    app.style.display = "grid";
     loadVersions();
   } else {
     authBox.style.display = "block";
@@ -13,80 +33,89 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+/* 🔑 LOGIN */
 function login() {
-  auth.signInWithEmailAndPassword(email.value, password.value)
-    .catch(e => alert(e.message));
+  auth.signInWithEmailAndPassword(
+    emailInput.value,
+    passwordInput.value
+  ).catch(err => alert(err.message));
 }
 
+/* 📝 SIGNUP */
 function signup() {
-  auth.createUserWithEmailAndPassword(email.value, password.value)
-    .catch(e => alert(e.message));
+  auth.createUserWithEmailAndPassword(
+    emailInput.value,
+    passwordInput.value
+  ).catch(err => alert(err.message));
 }
 
+/* 🚪 LOGOUT */
 function logout() {
   auth.signOut();
 }
 
-/* PREVIEW */
+/* 👀 PREVIEW RESUME */
 function generateResume() {
-  r-name.innerText = name.value;
-  r-role.innerText = role.value;
-  r-skills.innerText = skills.value;
+  rName.innerText = nameInput.value || "Your Name";
+  rRole.innerText = roleInput.value || "";
+  rSkills.innerText = skillsInput.value || "";
 
-  r-projects.innerHTML = "";
-  projects.value.split("\n").forEach(p => {
+  rProjects.innerHTML = "";
+  projectsInput.value.split("\n").forEach(p => {
     if (p.trim()) {
       const li = document.createElement("li");
       li.innerText = p;
-      r-projects.appendChild(li);
+      rProjects.appendChild(li);
     }
   });
 }
 
-/* TEMPLATE */
-function changeTemplate(t) {
-  resume.className = "resume-section " + t;
+/* 🎨 TEMPLATE */
+function changeTemplate(template) {
+  resume.className = "resume-section " + template;
 }
 
-/* SAVE VERSION */
+/* 💾 SAVE VERSION */
 function saveResume() {
-  if (!currentUser) return;
+  if (!currentUser) return alert("Login first");
 
   db.collection("resumes")
     .doc(currentUser.uid)
     .collection("versions")
     .add({
-      name: name.value,
-      role: role.value,
-      skills: skills.value,
-      projects: projects.value,
-      createdAt: new Date()
-    });
-
-  alert("Version saved ✅");
-  loadVersions();
+      name: nameInput.value,
+      role: roleInput.value,
+      skills: skillsInput.value,
+      projects: projectsInput.value,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+      alert("Resume saved ✅");
+      loadVersions();
+    })
+    .catch(err => alert(err.message));
 }
 
-/* LOAD VERSION LIST */
+/* 📂 LOAD VERSIONS */
 function loadVersions() {
-  versions.innerHTML = '<option value="">Select version</option>';
+  versions.innerHTML = `<option value="">Select version</option>`;
 
   db.collection("resumes")
     .doc(currentUser.uid)
     .collection("versions")
     .orderBy("createdAt", "desc")
     .get()
-    .then(snap => {
-      snap.forEach(doc => {
+    .then(snapshot => {
+      snapshot.forEach(doc => {
         const opt = document.createElement("option");
         opt.value = doc.id;
-        opt.innerText = doc.data().createdAt.toDate().toLocaleString();
+        opt.innerText = doc.id;
         versions.appendChild(opt);
       });
     });
 }
 
-/* LOAD SELECTED VERSION */
+/* ♻ LOAD SELECTED VERSION */
 function loadVersion(id) {
   if (!id) return;
 
@@ -97,15 +126,15 @@ function loadVersion(id) {
     .get()
     .then(doc => {
       const d = doc.data();
-      name.value = d.name;
-      role.value = d.role;
-      skills.value = d.skills;
-      projects.value = d.projects;
+      nameInput.value = d.name;
+      roleInput.value = d.role;
+      skillsInput.value = d.skills;
+      projectsInput.value = d.projects;
       generateResume();
     });
 }
 
-/* PDF */
+/* 📄 PDF */
 function downloadPDF() {
   html2pdf().from(resume).save("resume.pdf");
 }
