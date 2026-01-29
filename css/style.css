@@ -1,14 +1,14 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
   margin: 0;
+  background: #f4f6f8;
 }
 
 header {
   background: #0a66c2;
   color: white;
-  padding: 20px;
   text-align: center;
+  padding: 20px;
 }
 
 .container {
@@ -24,30 +24,40 @@ header {
   border-radius: 10px;
 }
 
-input, textarea {
+input, textarea, select {
   width: 100%;
-  margin-bottom: 10px;
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 button {
   background: #0a66c2;
   color: white;
-  padding: 10px;
   border: none;
-  border-radius: 5px;
+  padding: 10px;
+  margin: 5px 0;
   cursor: pointer;
 }
 
-.ats-box {
-  margin-top: 20px;
-  padding: 15px;
-  border: 2px dashed #0a66c2;
+.auth-box {
+  max-width: 300px;
+  margin: 50px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
   text-align: center;
 }
 
-#atsScore {
-  font-size: 32px;
-  font-weight: bold;
-  color: green;
+/* Templates */
+.resume-section.classic {
+  font-size: 14px;
+}
+
+.resume-section.modern {
+  background: linear-gradient(135deg, #ffffff, #e0f2fe);
+  border-left: 6px solid #0a66c2;
+}
+
+.resume-section.modern h2 {
+  color: #0a66c2;
 }
