@@ -1,5 +1,5 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyD3_1AO7ZmoHYFgiHeLjOJwSbGMGmq06bA",
+  apiKey: "YOUR-API-KEY",
   authDomain: "ai-resume-builder-7575c.firebaseapp.com",
   projectId: "ai-resume-builder-7575c",
   storageBucket: "ai-resume-builder-7575c.firebasestorage.app",
