@@ -6,6 +6,7 @@ auth.onAuthStateChanged(user => {
     currentUser = user;
     authBox.style.display = "none";
     app.style.display = "flex";
+    loadVersions();
   } else {
     authBox.style.display = "block";
     app.style.display = "none";
@@ -26,20 +27,18 @@ function logout() {
   auth.signOut();
 }
 
-/* RESUME PREVIEW */
+/* PREVIEW */
 function generateResume() {
-  document.getElementById("r-name").innerText = name.value || "Your Name";
-  document.getElementById("r-role").innerText = role.value || "Job Role";
-  document.getElementById("r-skills").innerText = skills.value || "Skills";
+  r-name.innerText = name.value;
+  r-role.innerText = role.value;
+  r-skills.innerText = skills.value;
 
-  const ul = document.getElementById("r-projects");
-  ul.innerHTML = "";
-
+  r-projects.innerHTML = "";
   projects.value.split("\n").forEach(p => {
     if (p.trim()) {
       const li = document.createElement("li");
       li.innerText = p;
-      ul.appendChild(li);
+      r-projects.appendChild(li);
     }
   });
 }
@@ -49,41 +48,64 @@ function changeTemplate(t) {
   resume.className = "resume-section " + t;
 }
 
-/* SAVE / LOAD */
+/* SAVE VERSION */
 function saveResume() {
   if (!currentUser) return;
-  db.collection("resumes").doc(currentUser.uid).set({
-    name: name.value,
-    role: role.value,
-    skills: skills.value,
-    projects: projects.value
-  });
-  alert("Resume Saved ✅");
+
+  db.collection("resumes")
+    .doc(currentUser.uid)
+    .collection("versions")
+    .add({
+      name: name.value,
+      role: role.value,
+      skills: skills.value,
+      projects: projects.value,
+      createdAt: new Date()
+    });
+
+  alert("Version saved ✅");
+  loadVersions();
 }
 
-function loadResume() {
-  if (!currentUser) return;
-  db.collection("resumes").doc(currentUser.uid).get()
-    .then(doc => {
-      if (doc.exists) {
-        const d = doc.data();
-        name.value = d.name;
-        role.value = d.role;
-        skills.value = d.skills;
-        projects.value = d.projects;
-        generateResume();
-      }
+/* LOAD VERSION LIST */
+function loadVersions() {
+  versions.innerHTML = '<option value="">Select version</option>';
+
+  db.collection("resumes")
+    .doc(currentUser.uid)
+    .collection("versions")
+    .orderBy("createdAt", "desc")
+    .get()
+    .then(snap => {
+      snap.forEach(doc => {
+        const opt = document.createElement("option");
+        opt.value = doc.id;
+        opt.innerText = doc.data().createdAt.toDate().toLocaleString();
+        versions.appendChild(opt);
+      });
     });
 }
 
-/* PDF (MULTI-PAGE AUTO) */
+/* LOAD SELECTED VERSION */
+function loadVersion(id) {
+  if (!id) return;
+
+  db.collection("resumes")
+    .doc(currentUser.uid)
+    .collection("versions")
+    .doc(id)
+    .get()
+    .then(doc => {
+      const d = doc.data();
+      name.value = d.name;
+      role.value = d.role;
+      skills.value = d.skills;
+      projects.value = d.projects;
+      generateResume();
+    });
+}
+
+/* PDF */
 function downloadPDF() {
-  const opt = {
-    margin: 0.5,
-    filename: "resume.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
-  };
-  html2pdf().set(opt).from(resume).save();
+  html2pdf().from(resume).save("resume.pdf");
 }
