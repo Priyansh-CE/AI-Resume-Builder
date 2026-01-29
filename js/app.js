@@ -11,3 +11,7 @@ function generateResume() {
   document.getElementById("r-projects").innerText =
     document.getElementById("projects").value || "Projects";
 }
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+}
